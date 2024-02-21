@@ -24,6 +24,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+
+
 app.use(session({
   secret: 'secret',
   resave: false,
@@ -62,5 +65,13 @@ app.get('/vulnerable', (req, res) => {
  
 });
 
+
+app.get('/vulnerable2', (req, res) => {
+ if (req.query.url) {
+ 	res.redirect(req.query.url);
+ } else {
+ 	res.redirect('https://www.example.com');
+ }
+});
 
 module.exports = app;
