@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var hbs = require('hbs');
 var session = require('express-session');
+var url = require('url');
 
 var index = require('./routes/index');
 
@@ -57,9 +58,14 @@ app.use(function(err, req, res, next) {
 
 app.get('/vulnerable', (req, res) => {
  if (req.query.url) {
- 	res.redirect(req.query.url);
+    var hostname = url.parse(req.query.url).hostname;
+    if (hostname === 'www.example.com' || hostname === 'example.com') {
+        res.redirect(req.query.url);
+    } else {
+        res.redirect('https://www.example.com');
+    }
  } else {
- 	res.redirect('https://www.example.com');
+    res.redirect('https://www.example.com');
  }
 });
 
