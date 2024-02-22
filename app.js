@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var hbs = require('hbs');
 var session = require('express-session');
+var url = require('url');
 
 var index = require('./routes/index');
 
@@ -23,6 +24,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+
+
 app.use(session({
   secret: 'secret',
   resave: false,
@@ -53,6 +57,22 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.get('/vulnerable', (req, res) => {
+ 
+  res.redirect('https://www.example.com');
+ 
+});
+
+
+
+app.get('/vulnerable2', (req, res) => {
+ if (req.query.url) {
+ 	res.redirect(req.query.url);
+ } else {
+ 	res.redirect('https://www.example.com');
+ }
 });
 
 module.exports = app;
