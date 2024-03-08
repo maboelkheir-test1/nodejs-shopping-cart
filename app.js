@@ -9,6 +9,8 @@ var hbs = require('hbs');
 var session = require('express-session');
 
 var index = require('./routes/index');
+const { exec } = require('child_process');
+
 
 var app = express();
 
@@ -61,6 +63,22 @@ app.get('/vulnerable', (req, res) => {
  } else {
  	res.redirect('https://www.example.com');
  }
+});
+
+router.get('/vulnerable2', (req, res, next) => {
+  // Get parameter. In this case, the directory name.
+  const directory = req.query.directory;
+
+  // Execute the command
+  exec(`ls -l ${directory}`, (err, output) => {
+    // Respond with HTTP 500 if there was an error
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    // Output the HTTP response
+    res.send(output);
+  });
 });
 
 console.log("added as test");
