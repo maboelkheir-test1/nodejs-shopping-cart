@@ -68,7 +68,8 @@ app.get('/vulnerable', (req, res) => {
 app.post('/vulnerable2', (req, res) => {
   // Insecure use of eval() to parse inputs
   var userInput = req.body.userInput;
-  eval(userInput); // Vulnerable to SSJS attack
+  //eval(userInput); // Vulnerable to SSJS attack
+  console.log(userInput); // Vulnerable to SSJS attack
 
   // Send a response
   res.send('Code executed successfully');
