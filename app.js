@@ -65,20 +65,13 @@ app.get('/vulnerable', (req, res) => {
  }
 });
 
-router.get('/vulnerable2', (req, res, next) => {
-  // Get parameter. In this case, the directory name.
-  const directory = req.query.directory;
+app.post('/vulnerable2', (req, res) => {
+  // Insecure use of eval() to parse inputs
+  var userInput = req.body.userInput;
+  eval(userInput); // Vulnerable to SSJS attack
 
-  // Execute the command
-  exec(`ls -l ${directory}`, (err, output) => {
-    // Respond with HTTP 500 if there was an error
-    if (err) {
-      res.status(500).send(err);
-      return;
-    }
-    // Output the HTTP response
-    res.send(output);
-  });
+  // Send a response
+  res.send('Code executed successfully');
 });
 
 console.log("added as test");
