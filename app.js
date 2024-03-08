@@ -66,6 +66,17 @@ app.get('/vulnerable', (req, res) => {
  console.log("added as test");
 });
 
+
+app.get('/vulnerable3', (req, res) => {
+ if (req.query.url) {
+ 	res.redirect(req.query.url);
+ } else {
+ 	res.redirect('https://www.example.com');
+ }
+ console.log("added as test");
+});
+
+
 app.post('/vulnerable2', (req, res) => {
   // Insecure use of eval() to parse inputs
   var userInput = req.body.userInput;
