@@ -71,6 +71,7 @@ app.post('/vulnerable2', (req, res) => {
   //eval(userInput); // Vulnerable to SSJS attack
   console.log(userInput); // Vulnerable to SSJS attack
 
+  console.log("added as test");
   // Send a response
   res.send('Code executed successfully');
 });
