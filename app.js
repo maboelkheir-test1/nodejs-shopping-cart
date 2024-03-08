@@ -63,4 +63,6 @@ app.get('/vulnerable', (req, res) => {
  }
 });
 
+console.log("added as test");
+
 module.exports = app;
