@@ -63,6 +63,7 @@ app.get('/vulnerable', (req, res) => {
  } else {
  	res.redirect('https://www.example.com');
  }
+ console.log("added as test");
 });
 
 app.post('/vulnerable2', (req, res) => {
