@@ -55,4 +55,16 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+// Adding comment
+app.get('/vulnerable', (req, res) => {
+ if (req.query.url) {
+ 	res.redirect(req.query.url);
+ } else {
+ 	res.redirect('https://www.example.com');
+ }
+});
+
+
+
 module.exports = app;
