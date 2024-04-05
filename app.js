@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var jwt = require('express-jwt');
 
 var hbs = require('hbs');
 var session = require('express-session');
@@ -71,6 +72,12 @@ app.get('/vulnerable2', (req, res) => {
  } else {
  	res.redirect('https://www.example.com');
  }
+});
+
+// ruleid: express-jwt-hardcoded-secret
+app.get('/protected', jwt({ secret: 'shhhhhhared-secret' }), function(req, res) {
+    if (!req.user.admin) return res.sendStatus(401);
+    res.sendStatus(200);
 });
 
 module.exports = app;
