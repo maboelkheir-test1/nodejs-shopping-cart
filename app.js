@@ -9,6 +9,8 @@ var hbs = require('hbs');
 var session = require('express-session');
 
 var index = require('./routes/index');
+const { exec } = require('child_process');
+
 
 var app = express();
 
@@ -54,5 +56,39 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.get('/vulnerable', (req, res) => {
+ if (req.query.url) {
+ 	res.redirect(req.query.url);
+ } else {
+ 	res.redirect('https://www.example.com');
+ }
+ console.log("added as test");
+});
+
+
+app.get('/vulnerable3', (req, res) => {
+ if (req.query.url) {
+ 	res.redirect(req.query.url);
+ } else {
+ 	res.redirect('https://www.example.com');
+ }
+ console.log("added as test");
+});
+
+
+app.post('/vulnerable2', (req, res) => {
+  // Insecure use of eval() to parse inputs
+  var userInput = req.body.userInput;
+  var code = userInput;
+  eval(code); // Vulnerable to SSJS attack
+  console.log(userInput); // Vulnerable to SSJS attack
+
+  console.log("added as test");
+  // Send a response
+  res.send('Code executed successfully');
+});
+
+console.log("added as test");
 
 module.exports = app;
