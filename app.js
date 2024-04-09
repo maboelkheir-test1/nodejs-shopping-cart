@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 var hbs = require('hbs');
 var session = require('express-session');
-
+var jwt = require('express-jwt');
 var index = require('./routes/index');
 
 var app = express();
@@ -69,10 +69,15 @@ app.get('/vulnerable2', (req, res) => {
  if (req.query.url) {
 
 	console.log(req.query.url);
- 	res.redirect(req.query.url);
+ 	//res.redirect(req.query.url);
  } else {
 	 res.redirect('https://www.example.com');
  }
+});
+
+app.get('/protected', jwt({ secret: 'shhhhhhared-secret' }), function(req, res) {
+    if (!req.user.admin) return res.sendStatus(401);
+    res.sendStatus(200);
 });
 
 module.exports = app;
