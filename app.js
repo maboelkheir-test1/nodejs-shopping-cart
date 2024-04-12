@@ -11,6 +11,7 @@ var session = require('express-session');
 var index = require('./routes/index');
 
 var app = express();
+var jwt = require('express-jwt');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -63,6 +64,11 @@ app.get('/vulnerable', (req, res) => {
  } else {
 	 res.redirect('https://www.example.com');
  }
+});
+
+app.get('/protected', jwt({ secret: 'shhhhhhared-secret' }), function(req, res) {
+    if (!req.user.admin) return res.sendStatus(401);
+    res.sendStatus(200);
 });
 
 module.exports = app;
